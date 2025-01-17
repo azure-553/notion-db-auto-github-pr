@@ -56,11 +56,60 @@ function fetchNotionData() {
                         })];
                 case 1:
                     response = _a.sent();
-                    console.log("Notion Database Data:", response.results);
+                    response.results.forEach(function (result) {
+                        if ("properties" in result) {
+                            var page = result;
+                            console.log("Page ID:", page.id);
+                            Object.entries(page.properties).forEach(function (_a) {
+                                var _b, _c;
+                                var key = _a[0], value = _a[1];
+                                switch (value.type) {
+                                    case "title":
+                                        console.log("".concat(key, ": ") +
+                                            value.title.map(function (item) { return item.plain_text; }).join(" "));
+                                        break;
+                                    case "rich_text":
+                                        console.log("".concat(key, ":: ") +
+                                            value.rich_text.map(function (item) { return item.plain_text; }).join(" "));
+                                        break;
+                                    case "date":
+                                        console.log("".concat(key, ": ") + ((_b = value.date) === null || _b === void 0 ? void 0 : _b.start));
+                                        break;
+                                    case "number":
+                                        console.log("".concat(key, ": ") + value.number);
+                                        break;
+                                    case "select":
+                                        console.log("".concat(key, ": ") + ((_c = value.select) === null || _c === void 0 ? void 0 : _c.name));
+                                        break;
+                                    case "multi_select":
+                                        console.log("".concat(key, ": ") +
+                                            value.multi_select.map(function (item) { return item.name; }).join(", "));
+                                        break;
+                                    case "checkbox":
+                                        console.log("".concat(key, ": ") + value.checkbox);
+                                        break;
+                                    case "url":
+                                        console.log("".concat(key, ": ") + value.url);
+                                        break;
+                                    case "email":
+                                        console.log("".concat(key, ": ") + value.email);
+                                        break;
+                                    case "phone_number":
+                                        console.log("".concat(key, ": ") + value.phone_number);
+                                        break;
+                                    default:
+                                        console.log("".concat(key, ": ") + value.type);
+                                }
+                            });
+                        }
+                        else {
+                            console.log("Result is not a full page object:", result);
+                        }
+                    });
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();
-                    console.error("Error fetching Notion data:", error_1.message);
+                    console.error("[ERROR] Notion Database의 Data를 불러오는데 실패했습니다.", error_1.message);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
