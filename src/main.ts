@@ -10,7 +10,9 @@ const databaseId = process.env.NOTION_DATABASE_ID;
 async function fetchNotionData(): Promise<void> {
   try {
     if (!databaseId) {
-      throw new Error("Missing NOTION_DATABASE_ID environment variable");
+      throw new Error(
+        "[ERROR] NOTION_DATABASE_ID 환경 변수가 존재하지 않습니다."
+      );
     }
 
     const response = await notion.databases.query({
@@ -68,7 +70,7 @@ async function fetchNotionData(): Promise<void> {
           }
         });
       } else {
-        console.log("Result is not a full page object:", result);
+        console.log("[ERROR] 결과가 전체 페이지 개체가 아닙니다.", result);
       }
     });
   } catch (error: any) {
