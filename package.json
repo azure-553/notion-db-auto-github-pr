@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "@notionhq/client": "^2.2.15",
-    "axios": "^1.7.9"
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "@types/node": "^22.10.7",
